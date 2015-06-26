@@ -1560,14 +1560,6 @@ else if (strcmp(userurl, "http://www.google.com/blank.html") == 0) {
     bbody = bfromcstralloc(512,"");
 
 }
-else if (strlen(userurl) > 40) {
-    redir_http(buffer, "200 OK");
-    bcatcstr(buffer, "Content-Type: text/html; charset=UTF-8\r\n");
-    bbody = bfromcstralloc(512,
-                           "<html><head><meta http-equiv=\"refresh\" content=\"0; URL=http://www.google.com\"></head><body>"
-                           "</body></html>\r\n");
-
-}
 else {	
 
     redir_http(buffer, "302 Moved Temporarily");
