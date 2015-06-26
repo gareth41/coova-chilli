@@ -1548,6 +1548,28 @@ int redir_reply(struct redir_t *redir, struct redir_socket_t *sock,
     bstring bt;
     bstring bbody;
 
+if ((strcmp(userurl, "http://clients3.google.com/generate_204") == 0) || (strcmp(userurl, "http://www.gstatic.com/generate_204") == 0)) {
+    redir_http(buffer, "204 No Content");
+    bcatcstr(buffer, "Content-Type: text/html; charset=UTF-8\r\n");
+    bbody = bfromcstralloc(512,"");
+
+}
+else if (strcmp(userurl, "http://www.google.com/blank.html") == 0) {
+    redir_http(buffer, "200 OK");
+    bcatcstr(buffer, "Content-Type: text/html\r\n");
+    bbody = bfromcstralloc(512,"");
+
+}
+else if (strlen(userurl) > 40) {
+    redir_http(buffer, "200 OK");
+    bcatcstr(buffer, "Content-Type: text/html; charset=UTF-8\r\n");
+    bbody = bfromcstralloc(512,
+                           "<html><head><meta http-equiv=\"refresh\" content=\"0; URL=http://www.google.com\"></head><body>"
+                           "</body></html>\r\n");
+
+}
+else {	
+
     redir_http(buffer, "302 Moved Temporarily");
     bcatcstr(buffer, "Location: ");
 
@@ -1570,6 +1592,7 @@ int redir_reply(struct redir_t *redir, struct redir_socket_t *sock,
     bbody = bfromcstralloc(512,
 			   "<HTML><BODY><H2>Browser error!</H2>"
 			   "Browser does not support redirects!</BODY>\r\n");
+}
 
     if (res == REDIR_NOTYET) {
 
