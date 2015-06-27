@@ -602,13 +602,28 @@ static int http_aaa_setup(struct radius_t *radius, proxy_request *req) {
   if (!req->dbuf)
     req->dbuf = bfromcstr("");
 
-  bassignformat(req->wbuf,
-		"GET %s HTTP/1.1\r\n"
-		"Host: %s:%d\r\n"
-		"User-Agent: CoovaChilli " VERSION "\r\n"
-		"Connection: close\r\n"
-		"\r\n",
-		req->url->data + uripos, hostname, port);
+  if (port == 80) {
+
+          bassignformat(req->wbuf,
+                        "GET %s HTTP/1.1\r\n"
+                        "Host: %s\r\n"
+                        "User-Agent: CoovaChilli " VERSION "\r\n"
+                        "Connection: close\r\n"
+                        "\r\n",
+                        req->url->data + uripos, hostname);
+
+  }
+  else {
+
+          bassignformat(req->wbuf,
+                        "GET %s HTTP/1.1\r\n"
+                        "Host: %s:%d\r\n"
+                        "User-Agent: CoovaChilli " VERSION "\r\n"
+                        "Connection: close\r\n"
+                        "\r\n",
+                        req->url->data + uripos, hostname, port);
+
+  }
 
   if (conn_setup(&req->conn, hostname, port, req->wbuf, req->dbuf))
     return -1;
