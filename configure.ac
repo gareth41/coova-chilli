@@ -14,6 +14,7 @@ AC_CONFIG_MACRO_DIR([m4])
 # Checks for programs.
 AC_PROG_CC
 AC_PROG_CC_C_O
+AM_PROG_CC_C_O
 
 #JJAKO Check for libtool
 AC_PROG_LIBTOOL
